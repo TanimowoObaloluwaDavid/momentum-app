@@ -1,0 +1,117 @@
+// momentum.kite — a habit tracker built entirely in Kite
+//
+// ▸ 3 named screens + `goto` navigation
+// ▸ custom widget components (make ... ret <widget>)
+// ▸ bar progress widgets, styled text & buttons
+// ▸ each/when loops driving reactive state
+
+app Momentum {
+  state day = 12
+  state streak = 4
+
+  set habits = [
+    #{ name: "Drink 2L of water", done: true },
+    #{ name: "Morning run · 20 min", done: false },
+    #{ name: "Read 20 pages", done: true },
+    #{ name: "Meditate · 10 min", done: false },
+    #{ name: "Sleep before 11pm", done: true },
+  ]
+
+  set week = [
+    #{ d: "Mon", p: 60 },
+    #{ d: "Tue", p: 80 },
+    #{ d: "Wed", p: 40 },
+    #{ d: "Thu", p: 100 },
+    #{ d: "Fri", p: 60 },
+    #{ d: "Sat", p: 20 },
+    #{ d: "Sun", p: 80 },
+  ]
+
+  make doneCount() {
+    set n = 0
+    each h in habits {
+      when h.done { n += 1 }
+    }
+    ret n
+  }
+
+  make percent() {
+    ret doneCount() / len(habits)
+  }
+
+  make doneColor(d) {
+    when d { ret "#35B88E" } else { ret "#E5E5EA" }
+  }
+
+  make checkIcon(d) {
+    when d { ret "✓" } else { ret "○" }
+  }
+
+  make habitToggle(h) {
+    ret btn(h.name, doneColor(h.done)) {
+      when h.done { h.done = false } else { h.done = true }
+    }
+  }
+
+  screen Home {
+    col {
+      spacer(24)
+      text("Momentum", 40, "#5E5CE6")
+      spacer(6)
+      text("Day {day} · {streak}-day streak", 16, "#6E6E73")
+      spacer(20)
+      bar(percent())
+      spacer(8)
+      text("{doneCount()} of {len(habits)} done today", 14, "#24292F")
+      spacer(20)
+      each h in habits {
+        habitToggle(h)
+        spacer(10)
+      }
+      spacer(10)
+      btn("Statistics", "#24292F") { goto Stats }
+      spacer(10)
+      btn("Week view", "#24292F") { goto Streak }
+    }
+  }
+
+  screen Stats {
+    col {
+      spacer(24)
+      text("Statistics", 32, "#1F2328")
+      spacer(20)
+      text("{doneCount()} / {len(habits)} habits complete", 18, "#1F2328")
+      spacer(10)
+      bar(percent())
+      spacer(20)
+      each h in habits {
+        row {
+          text(checkIcon(h.done), 20, doneColor(h.done))
+          spacer(10)
+          text(h.name, 16, "#1F2328")
+        }
+        spacer(14)
+      }
+      spacer(10)
+      btn("Back home", "#5E5CE6") { goto Home }
+    }
+  }
+
+  screen Streak {
+    col {
+      spacer(24)
+      text("This week", 32, "#1F2328")
+      spacer(6)
+      text("{streak}-day streak going", 16, "#6E6E73")
+      spacer(20)
+      each d in week {
+        text(d.d, 14, "#6E6E73")
+        spacer(4)
+        bar(d.p / 100)
+        spacer(12)
+      }
+      spacer(10)
+      btn("Back home", "#5E5CE6") { goto Home }
+    }
+  }
+}
