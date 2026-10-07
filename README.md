@@ -1,12 +1,12 @@
-# Momentum — A Habit Tracker in Kite
+﻿# Momentum - A Habit Tracker in Kite
 
 ![Momentum app preview](momentum.gif)
 
-Momentum is a polished, multi-screen habit tracker built entirely with [Kite](https://github.com/TanimowoObaloluwaDavid/kite) — Kite's own programming language that compiles to real Flutter apps.
+Momentum is a polished, multi-screen habit tracker built entirely with [Kite](https://github.com/TanimowoObaloluwaDavid/kite) â€” Kite's own programming language that compiles to real Flutter apps.
 
 ## Features
 
-- **Multi-screen**: Home · Stats · Streak with smooth goto navigation
+- **Multi-screen**: Home Â· Stats Â· Streak with smooth goto navigation
 - **Custom components**: make habitToggle(...) { ret btn(...) } keeps UI composable
 - **Reactive**: Tapping toggles habits, progress bars recalculate instantly
 - **Polished UI**: Styled text, colored buttons, ar progress, 
@@ -28,5 +28,7 @@ python -m kite build momentum.kite -o momentum.dart
 
 ## Built with
 
-Kite v0.2 — lexer · parser · interpreter · Dart transpiler. Uses screen, goto, make, 
+Kite v0.2 â€” lexer Â· parser Â· interpreter Â· Dart transpiler. Uses screen, goto, make, 
 et, each, when, ar, spacer.
+
+
